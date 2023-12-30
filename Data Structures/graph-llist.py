@@ -57,6 +57,18 @@ def iterative_DFS(v):
             visited.add(u)
             for node in graph[u]:
                 stack.append(node[0])
+def BFS(v):
+    queue = []
+    visited = set()
+    queue.append(v)
+    while queue:
+        u = queue.pop(0)
+        if u not in visited:
+            print(u, end='->')
+            visited.add(u)
+            for node in graph[u]:
+                queue.append(node[0])
+
 
 graph = {}
 add_node('A')
@@ -72,6 +84,8 @@ add_edge('D', 'A', 2)
 add_edge('E', 'C', 15)
 print(graph)
 visited = set()
-recursion_DFS('E', visited)
+recursion_DFS('A', visited)
 print()
-iterative_DFS('E')
+iterative_DFS('A')
+print()
+BFS('A')
