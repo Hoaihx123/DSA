@@ -87,6 +87,23 @@ class Node:
         while cur.right:
             cur = cur.right
         return cur.key
+    def sorted_array(self, arr):
+        if self.left:
+            arr = self.left.sorted_array(arr)
+        arr.append(self.key)
+        if self.right:
+            arr = self.right.sorted_array(arr)
+        return arr
+
+
+def to_balanced(arr, m, l):
+    root = Node(arr[int((l+m)/2)])
+    if l > m:
+        root.right = to_balanced(arr, int((l+m+2)/2), l)
+    if l > m+1:
+        root.left = to_balanced(arr, m, int((l+m-2)/2))
+    return root
+
 
 root = Node(20)
 listKeys = [18, 15, 2, 5, 14, 17, 25, 12, 9, 22, 23, 26, 21]
@@ -101,3 +118,9 @@ print(root.min_key())
 print(root.max_key())
 
 root.search(18)
+
+arr = root.sorted_array([])
+print(arr)
+
+root = to_balanced(arr, 0, len(arr)-1)
+root.preorder()
