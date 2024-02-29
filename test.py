@@ -1,31 +1,32 @@
-wordDict = ["cat","cats","and","sand","dog"]
-root ={}
+s="barfoothefoobarman"
+words=["foo","bar"]
 
-for word in wordDict:
-    cur =root
-    for c in word:
-        if c not in cur:
-            cur[c ] ={}
-        cur =cur[c]
-    cur['']={}
-def dp(s,k,n):
-    cur=root
-    result=[]
-    for i in range(k, n):
-        if '' in cur:
-            x=dp(s, i, n)
-            if x:
-                for r in x:
-                    print(r)
-                    result.append(s[k:i]+' '+r)
-        if s[i] in cur:
-            cur=cur[s[i]]
+m = len(words[0])
+n = len(words)
+l = len(s)
+dict1 = {}
+result = []
+for w in words:
+    dict1[w] = dict1.get(w, 0) + 1
+for i in range(m):
+    start = i
+    while start + m * n <= l:
+        dict2 = {}
+        j=start
+        while j <start+m*n:
+            if dict1.get(s[j:j + m], 0) > dict2.get(s[j:j + m], 0):
+                dict2[s[j:j + m]] = dict2.get(s[j:j + m], 0) + 1
+                j+=m
+            else:
+                break
+        print(j)
+        if j < start + m * n:
+            if dict1.get(s[j:j + m]):
+                start += m
+            else:
+                start = j + m
         else:
-            return result
-    if '' in cur:
-        result.append(s[k:])
-    return result
+            result.append(start)
+            start += m
+print(result)
 
-s = "catsanddog"
-n=len(s)
-print(dp(s,0,n))
